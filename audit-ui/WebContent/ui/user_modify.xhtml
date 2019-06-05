@@ -1,0 +1,76 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div class="ui-g ui-fluid">
+
+		<div class="ui-g-12 ui-md-6">
+			<p:panelGrid layout="grid" columns="4"
+				styleClass="ui-panelgrid-blank">
+				<p:commandButton value="Mbrapa"
+					action="#{userManagerBean.goToUserList()}" update="@form"
+					styleClass="orange-btn" icon="fa fa-arrow-left" />
+			</p:panelGrid>
+		</div>
+
+		<div class="ui-g-12">
+			<p:messages showDetail="true">
+				<p:autoUpdate />
+			</p:messages>
+		</div>
+
+		<div class="ui-g-12">
+			<p:panel header="MODIFIKO PËRDORUES">
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-6">
+						<p:panelGrid layout="grid" columns="4"
+							styleClass="ui-panelgrid-blank">
+							<p:outputLabel value="Emër" style="font-weight: bold" />
+							<p:inputText value="#{userManagerBean.user.officer.name}" />
+							<p:outputLabel value="Mbiemër" style="font-weight: bold" />
+							<p:inputText value="#{userManagerBean.user.officer.surname}" />
+							<p:outputLabel value="Grada" style="font-weight: bold" />
+							<p:inputText value="#{userManagerBean.user.officer.grade}" />
+							<p:outputLabel value="Funksioni" style="font-weight: bold" />
+							<p:inputText value="#{userManagerBean.user.officer.function}" />
+							<p:outputLabel value="Pozicioni" style="font-weight: bold" />
+							<p:inputText value="#{userManagerBean.user.officer.position}" />
+							<p:outputLabel value="Struktura" style="font-weight: bold" />
+							<p:inputText value="#{userManagerBean.user.officer.structure.name}" />
+							<p:outputLabel value="Roli" style="font-weight: bold" />
+							<p:inputText value="#{userManagerBean.user.roleCode}" />
+							<p:outputLabel value="Username" style="font-weight: bold" />
+							<p:inputText value="#{userManagerBean.user.username}" />
+							<p:outputLabel value="Password" style="font-weight: bold" />
+							<p:inputText value="#{userManagerBean.user.password}" />
+						</p:panelGrid>
+					</div>
+				
+				<div class="ui-g-12">
+					<p:panelGrid layout="grid" columns="4"
+						styleClass="ui-panelgrid-blank">
+						<p:commandButton value="Modifiko"
+							action="#{userManagerBean.modify()}" styleClass="purple-btn"
+							icon="fa fa-edit" update="@form">
+							<p:confirm header="Modifiko" message="Jeni të sigurt?" />
+						</p:commandButton>
+						<p:commandButton value="Anullo"
+							action="#{userManagerBean.goToUserList()}" styleClass="red-btn"
+							icon="fa fa-trash" update="@form">
+							<p:confirm header="Anullo" message="Jeni të sigurt?"
+								icon="ui-icon-alert" />
+						</p:commandButton>
+
+					</p:panelGrid>
+
+				</div>
+				</div>
+				
+			</p:panel>
+
+		</div>
+
+	</div>
+</ui:composition>

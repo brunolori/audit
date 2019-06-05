@@ -1,0 +1,70 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="../WEB-INF/template.xhtml">
+
+	<ui:define name="title">Profili</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+			<div class="ui-g dashboard">
+			
+				<div class="ui-g-12 ui-fluid">
+					<div class="user-card">
+						<div class="user-card-header">
+							<p:graphicImage name="images/dashboard/user-card-header.png" library="paradise-layout" />
+						</div>
+						<div class="user-card-content">
+							<p:graphicImage name="images/images.jpg" library="paradise-layout" style="height : 80px" />
+							
+							<div class="user-card-name">
+								<span>#{profileBean.user.officer.name} #{profileBean.user.officer.surname}</span>
+							</div>
+
+							<div class="user-detail">
+								<ul>
+									  <li class="clearfix"><i class="fa fa-tasks fa-fw"></i> <span
+										class="project-title">FUNKSIONI : </span> <span
+										class="project-detail">#{profileBean.user.officer.function}</span>
+										</li>
+										<li class="clearfix"><i class="fa fa-bars"></i> <span
+										class="project-title">POZICIONI : </span> <span
+										class="project-detail">#{profileBean.user.officer.position}</span>
+										</li>
+									   <li class="clearfix"><i class="fa fa-graduation-cap"></i> <span
+										class="project-title">GRADA : </span> <span
+										class="project-detail">#{profileBean.user.officer.grade}</span>
+										</li>
+									   <li class="clearfix"><i class="fa fa-credit-card fa-fw"></i>
+										<span class="project-title">STRUKTURA : </span> <span
+										class="project-detail">#{profileBean.user.officer.structure.name}</span>
+										</li>
+										<li class="clearfix"><i class="fa fa-window-restore"></i> <span
+										class="project-title">ROLI : </span> <span
+										class="project-detail">#{profileBean.user.roleCode}</span>
+										</li>
+										<li class="clearfix"><i class="fa fa-user"></i> <span
+										class="project-title">USERNAME : </span> <span
+										class="project-detail">#{profileBean.user.username}</span>
+										</li>
+										<li class="clearfix">
+										<i class="fa fa-lock"></i>
+										<span class="project-title">
+										 	PASSWORD : <p:inputText value="#{profileBean.user.password}"/>
+										</span> 
+
+										</li>
+				
+										
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

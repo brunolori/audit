@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" lang="en">
+
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+	</f:facet>
+	<title><ui:insert name="title">Auditing</ui:insert></title>
+	<h:outputScript name="js/nanoscroller.js" library="paradise-layout" />
+	<h:outputScript name="js/layout.js" library="paradise-layout" />
+	<h:outputStylesheet name="style.css" library="css" />
+	<ui:insert name="head" />
+</h:head>
+
+<h:body>
+
+<div class="ui-g ui-fluid">
+
+	<div class="ui-g-12">
+	
+		<f:facet name="inline">  
+	       <p:media value="#{documentViewBean.path}" width="100%" height="300px">  
+	           <h:outputLink value="#{documentViewBean.path}"></h:outputLink> 
+	       </p:media> 
+   		 </f:facet> 
+					
+	</div>
+	
+	<div class="ui-g-12">
+		<iframe src="file:///#{documentViewBean.path}" height="300px" width="100%" />
+	</div>
+	
+	<div class="ui-g-12">
+		<object data="file:///#{documentViewBean.path}?pfdrid_c=true" height="300px" width="100%" >
+			<param name="src" value="file:///#{documentViewBean.path}" />
+		</object>
+	</div>
+	
+</div>
+
+</h:body>
+
+</html>

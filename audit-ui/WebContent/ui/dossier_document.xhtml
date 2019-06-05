@@ -1,0 +1,66 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form enctype="multipart/form-data">
+		<div class="ui-g">
+			<div class="ui-g-12 ui-md-8">
+			<p:panel header="SHTO DOKUMENT" style="background-color: #f0f2f4;">
+				<p:panelGrid layout="grid" columns="2" styleClass="ui-panelgrid-blank ">
+
+					<p:outputLabel value="Emër Dokumenti " style="font-weight: bold" />
+					<p:inputText value="#{dossierBean.document.name}" />
+					<p:outputLabel value="Tipi Dokumenti " style="font-weight: bold" />
+					<p:selectOneMenu value="#{dossierBean.document.documentType}" converter="docTypeConverter">
+						<f:selectItem itemValue="#{null}" itemLabel="-Zgjidh-" />
+						<f:selectItems value="#{dossierBean.docTypes}" var="d" itemValue="#{d.code}" itemLabel="#{d.tag}" />/>
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Ngarko Dokument" style="font-weight: bold" />
+					
+					<p:fileUpload fileUploadListener="#{dossierBean.handleFileUpload}" mode="advanced"
+							cancelLabel="Anullo" uploadLabel="Ngarko" label="Zgjidh" auto="true" />
+					
+					
+				</p:panelGrid>
+
+				<p:panelGrid layout="grid" columns="6"
+					styleClass="ui-panelgrid-blank">
+					<p:commandButton value="Ruaj ndryshimet" action="#{dossierBean.registerDocument()}" update="@form" styleClass="green-btn" icon="fa fa-save" >
+						  <p:confirm header="Ruaj ndryshimet" message="Jeni të sigurt?" icon="ui-icon-alert" />
+				   </p:commandButton>
+				</p:panelGrid>
+				</p:panel>
+			</div>
+			
+	 	<ui:repeat var="d" value="#{dossierBean.documents}">
+				<div class="ui-g-12 ui-md-8">
+					<p:panel header="#{d.createUser.fullName()} - #{formatBean.formatTimestamp(d.createTime)}" styleClass="blue-pnl">
+					
+						<p:panelGrid layout="grid" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" styleClass="ui-panelgrid-blank">
+						<p:outputLabel value="Emri Dokumentit" styleClass="bold" />
+					    <p:outputLabel value="#{d.name}" />
+						<p:outputLabel value="Tipi i dokumentit" styleClass="bold"/>
+						<p:outputLabel value="#{d.documentType.tag}" />
+						
+						<h:panelGrid columns="4">
+						        <p:commandButton icon="fa fa-eye" onclick="this.form.target = '_blank'" actionListener="#{dossierBean.openFile(d)}"
+           									     ajax="false" styleClass="purple-btn"  />
+								<p:commandButton icon="fa fa-pencil" />
+								<p:commandButton icon="fa fa-trash" actionListener="#{dossierBean.deleteDocument()}" update="@form" styleClass="red-btn" >
+								<p:confirm header="Fshijë" message="Jeni të sigurt?" icon="ui-icon-alert" />
+								</p:commandButton>
+						</h:panelGrid>
+												
+						</p:panelGrid>					
+					
+					</p:panel>
+				</div>
+			</ui:repeat>
+
+		</div>
+
+	</h:form>
+</ui:composition>

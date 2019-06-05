@@ -1,0 +1,62 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="../WEB-INF/template.xhtml">
+
+	<ui:define name="title">Lista e Dokumentave</ui:define>
+
+	<ui:define name="content">
+		<h:form id="list_form">
+			<div class="ui-g ui-fluid">
+
+				<div class="ui-g-12">
+					<p:messages showDetail="true" closable="true">
+						<p:autoUpdate />
+					</p:messages>
+				</div>
+
+				<div class="ui-g-12">
+					<p:panel header="FILTRA KËRKIMI" styleClass="blue-pnl">
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-8">
+								<p:panelGrid columns="4" layout="grid"
+									styleClass="ui-panelgrid-blank form-group">
+									<p:inputText value="#{documentListBean.dossierNo}" placeholder="Nr Dosje" />
+									<p:selectOneMenu value="#{documentListBean.docTypeCode}" >
+										<f:selectItem itemValue="#{documentListBean.docTypeCode}" itemLabel="-Tipi Dokumentit-" />
+										<f:selectItems value="#{documentListBean.documentTypes}" var="dt" itemValue="#{dt.code}" itemLabel="#{dt.tag}" />/>
+									</p:selectOneMenu>
+								</p:panelGrid>
+								<p:panelGrid columns="4" layout="grid" styleClass="ui-panelgrid-blank form-group">
+									<p:commandButton value="Kërko" action="#{documentListBean.search()}" update="@form" styleClass="purple-btn" icon="fa fa-search" />
+									<p:commandButton value="Pastro" action="#{documentListBean.clear()}" update="@form" styleClass="green-btn" icon="fa fa-trash" />
+								</p:panelGrid>
+							</div>
+						</div>
+					</p:panel>
+				</div>
+
+				<div class="ui-g-12">
+					<p:dataTable value="#{documentListBean.documents}" var="d" emptyMessage="Nuk ka asnjë dokument"
+						reflow="true" rowIndexVar="r">
+						<f:facet name="header">
+							Lista e dokumentave
+						</f:facet>
+						<p:column headerText="#">
+							#{r+1}
+						</p:column>
+						<p:column headerText="Nr.Dosje">
+							<p:commandLink value="#{d.dossier.dossierNo}" action="#{documentListBean.viewDossier(d.dossier)}"/>
+						</p:column>
+						<p:column headerText="Emër Dokumenti">#{d.name}</p:column>
+						<p:column headerText="Tip Dokumenti">#{d.documentType.tag}</p:column>
+					</p:dataTable>
+				</div>
+
+			</div>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>

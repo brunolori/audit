@@ -1,0 +1,132 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Përdoruesi i Ri</ui:define>
+
+<p:panel header="REGJISTRIM PËRDORUESISH">
+
+	<div class="ui-g ui-fluid">
+		<div class="ui-g-12 ui-md-2">
+			<p:commandButton value="Mbrapa"
+				action="#{userManagerBean.goToUserList()}" update="@form"
+				styleClass="orange-btn" icon="fa fa-arrow-left" />
+		</div>
+
+		<div class="ui-g-12">
+			<p:messages showDetail="true" closable="true">
+				<p:autoUpdate />
+			</p:messages>
+		</div>
+
+
+		<div class="ui-g-12 ui-md-6 ">
+			<p:panel header="KËRKO OFICERIN" style="height: 100%">
+
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<p:panelGrid columns="2" layout="grid"
+							styleClass="ui-panelgrid-blank">
+
+							<p:inputText value="#{userManagerBean.name}" placeholder="Emër" />
+							<p:inputText value="#{userManagerBean.surname}"
+								placeholder="Mbiemër" />
+
+						</p:panelGrid>
+					</div>
+
+					<div class="ui-g-12">
+						<p:panelGrid columns="2" layout="grid"
+							styleClass="ui-panelgrid-blank">
+							<p:commandButton value="Kërko"
+								actionListener="#{userManagerBean.searchOfficer()}"
+								icon="ui-icon-search" styleClass="purple-btn" update="@form" />
+							<p:commandButton value="Pastro"
+								actionListener="#{userManagerBean.clearSearchOfficer()}"
+								icon="ui-icon-trash" styleClass="green-btn" update="@form" />
+
+						</p:panelGrid>
+					</div>
+
+					<div class="ui-g-12">
+
+						<p:dataTable value="#{userManagerBean.officers}" var="o"
+							reflow="true" paginator="true" paginatorAlwaysVisible="false"
+							rows="10" selection="#{userManagerBean.selectedOfficer}"
+							selectionMode="single" rowKey="#{o.id}"
+							emptyMessage="Asnjë oficer i listuar" rowIndexVar="r">
+							<f:facet name="header">
+                              	 Lista e Oficerëve
+                                </f:facet>
+							<p:ajax event="rowSelect"
+								listener="#{userManagerBean.onOfficerSelect()}" update="@form" />
+							<p:column headerText="#"> #{r+1} </p:column>
+							<p:column headerText="Emri">#{o.name}</p:column>
+							<p:column headerText="Mbiemri">#{o.surname}</p:column>
+							<p:column headerText="Grada">#{o.grade}</p:column>
+							<p:column headerText="Fuksioni">#{o.function}</p:column>
+							<p:column headerText="Pozicioni">#{o.position}</p:column>
+							<p:column headerText="Struktura">#{o.structure.name}</p:column>
+						</p:dataTable>
+
+					</div>
+				</div>
+			</p:panel>
+		</div>
+
+
+		<div class="ui-g-12 ui-md-6">
+			<p:panel header="TË DHËNAT E PËRDORUESIT">
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<p:panelGrid columns="4" layout="grid"
+							styleClass="ui-panelgrid-blank">
+							<p:outputLabel value="Emër" style="font-weight: bold" />
+							<p:inputText value="#{userManagerBean.officer.name}" disabled="#{userManagerBean.disableUser}" readonly="true" />
+							<p:outputLabel value="Mbiemër" style="font-weight: bold" />
+							<p:inputText value="#{userManagerBean.officer.surname}" disabled="#{userManagerBean.disableUser}" readonly="true" />
+							<p:outputLabel value="Grada" style="font-weight: bold" />
+							<p:inputText value="#{userManagerBean.officer.grade}" disabled="#{userManagerBean.disableUser}" readonly="true" />
+							<p:outputLabel value="Funksioni" style="font-weight: bold" />
+							<p:inputText value="#{userManagerBean.officer.function}" disabled="#{userManagerBean.disableUser}" readonly="true" />
+							<p:outputLabel value="Pozicioni" style="font-weight: bold" />
+							<p:inputText value="#{userManagerBean.officer.position}" disabled="#{userManagerBean.disableUser}" readonly="true" />
+							<p:outputLabel value="Struktura" style="font-weight: bold" />
+							<p:inputText value="#{userManagerBean.officer.structure.name}" disabled="#{userManagerBean.disableUser}" readonly="true" />
+							<p:outputLabel value="Role" style="font-weight: bold" />
+							<p:inputText value="#{userManagerBean.user.roleCode}" disabled="#{userManagerBean.disableUser}" />
+							<p:outputLabel value="Username" style="font-weight: bold" />
+							<p:inputText value="#{userManagerBean.user.username}" disabled="#{userManagerBean.disableUser}" />
+							<p:outputLabel value="Password" style="font-weight: bold" />
+							<p:inputText value="#{userManagerBean.user.password}" disabled="#{userManagerBean.disableUser}" />
+						</p:panelGrid>
+					</div>
+
+
+					<div class="ui-g-12">
+
+						<p:panelGrid layout="grid" columns="4"
+							styleClass="ui-panelgrid-blank">
+							<p:commandButton value="Regjistro" action="#{userManagerBean.register()}" icon="fa fa-save"
+								styleClass="blue-btn" update="@form">
+								<p:confirm header="Regjistro përdorues" message="Jeni të sigurt?" icon="ui-icon-alert" />
+							</p:commandButton>
+							<p:commandButton value="Pastro" actionListener="#{userManagerBean.clearUser()}"
+								styleClass="green-btn" icon="fa fa-trash-o" update="@form" />
+						</p:panelGrid>
+
+					</div>
+
+
+
+				</div>
+			</p:panel>
+		</div>
+
+	</div>
+
+</p:panel>
+
+</ui:composition>

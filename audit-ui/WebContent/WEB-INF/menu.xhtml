@@ -1,0 +1,28 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pv="http://primefaces.org/paradise">
+
+	<div
+		class="layout-menu-wrapper #{guestPreferences.darkMenu ? 'layout-menu-dark' : null}">
+		<div class="nano">
+			<div class="nano-content sidebar-scroll-content">
+				<div class="layout-menu-container">
+					<h:form id="menuform">
+
+						<pv:menu>
+							
+							<p:menuitem id="pm_dossier_list" value="Lista e Dosjeve" url="/ui/dossier_list.xhtml" icon="fa fa-bars" />
+							<p:menuitem id="pm_doc_list" value="Lista e Dokumentave" url="/ui/document_list.xhtml" icon="fa fa-bars" />
+							<p:menuitem id="pm_stats" value="Raporte/Statistika" url="/ui/dashboard.xhtml" icon="fa fa-area-chart" />
+                            <p:menuitem id="pm_users" value="Përdoruesit" url="/ui/user_manager.xhtml" icon="fa fa-user-circle-o" />
+						</pv:menu>
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</ui:composition>

@@ -1,0 +1,139 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="../WEB-INF/template.xhtml">
+
+	<ui:define name="title">Lista e Dosjeve</ui:define>
+
+	<ui:define name="content">
+		<h:form id="list_form">
+			<div class="ui-g ui-fluid">
+
+				<div class="ui-g-12">
+					<p:messages showDetail="true" closable="true">
+						<p:autoUpdate />
+					</p:messages>
+				</div>
+
+				<div class="ui-g-12 ui-md-2">
+					<p:commandButton value="Dosje e re" styleClass="orange-btn" icon="fa fa-file" oncomplete="PF('createDlg').show();" 
+					update=":createDlgId"/>
+				</div>
+
+				<div class="ui-g-12">
+					<p:panel header="FILTRA KËRKIMI" styleClass="blue-pnl">
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-6">
+								<p:panelGrid columns="4" layout="grid"
+									styleClass="ui-panelgrid-blank form-group">
+									 
+			                       <p:inputText value="#{dossierListBean.req.dossierNo}" placeholder="Nr Dosjes"/>
+									<p:selectOneMenu value="#{dossierListBean.req.structureId}">
+										<f:selectItem itemValue="#{null}" itemLabel="-Struktura-" />
+										<f:selectItems value="#{dossierListBean.structures}" var="s" itemValue="#{s.id}" itemLabel="#{s.name}" />
+									</p:selectOneMenu>
+									<p:selectOneMenu value="#{dossierListBean.req.riskLevelCode}">
+										<f:selectItem itemValue="#{null}" itemLabel="-Niveli riskut-" />
+										<f:selectItems value="#{dossierListBean.riskLevels}" var="rl" itemValue="#{rl.code}" itemLabel="#{rl.tag}" />
+									</p:selectOneMenu>
+									<p:selectOneMenu value="#{dossierListBean.req.auditingStatusCode}">
+										<f:selectItem itemValue="#{null}" itemLabel="-Statusi auditit-" />
+										<f:selectItems value="#{dossierListBean.auditStatuses}" var="as" itemValue="#{as.code}" itemLabel="#{as.tag}" />
+									</p:selectOneMenu>
+									<p:calendar value="#{dossierListBean.req.fromDate}" navigator="true" pattern="dd.MM.yyyy" placeholder="-Nga data-" />
+									<p:calendar value="#{dossierListBean.req.toDate}" navigator="true" pattern="dd.MM.yyyy" placeholder="-Në data-" />
+									<p:selectOneMenu value="#{dossierListBean.req.userId}">
+										<f:selectItem itemValue="#{null}" itemLabel="-Përdoruesi-" />
+										<f:selectItems value="#{dossierListBean.users}" var="u" itemValue="#{u.id}" itemLabel="#{u}" />
+									</p:selectOneMenu>
+
+								</p:panelGrid>
+								<p:panelGrid columns="4" layout="grid"
+									styleClass="ui-panelgrid-blank form-group">
+									<p:commandButton value="Kërko" action="#{dossierListBean.search()}" update="@form" styleClass="purple-btn" icon="fa fa-search" />
+									<p:commandButton value="Pastro" action="#{dossierListBean.clear()}" update="@form" styleClass="green-btn" icon="fa fa-trash" />
+								</p:panelGrid>
+							</div>
+						</div>
+					</p:panel>
+				</div>
+
+
+				<div class="ui-g-12">
+					<p:dataTable value="#{dossierListBean.dossiers}" var="d" paginator="true" paginatorAlwaysVisible="false" 
+						rows="20" rowsPerPageTemplate="10,20,30,50" selectionMode="single" selection="#{dossierListBean.selectedDossier}"
+						rowKey="#{d.id}" emptyMessage="Nuk ka asnjë dosje" reflow="true" rowIndexVar="r">
+						
+						<p:ajax event="rowSelect" listener="#{dossierListBean.view()}" update="@form"/>
+						
+						<f:facet name="header">
+							Lista e dosjeve
+						</f:facet>
+						
+						<p:column headerText="#">
+							#{r+1}
+						</p:column>
+						<p:column headerText="Nr Dosjes">
+							#{d.dossierNo}
+						</p:column>
+						<p:column headerText="Struktura">
+							#{d.structure.name}
+						</p:column>
+						<p:column headerText="Statusi">
+							#{d.auditingStatus.tag}
+						</p:column>
+						<p:column headerText="Niveli Riskut">
+							#{d.riskLevel.tag}
+						</p:column>
+						<p:column headerText="Data krijimit">
+							#{formatBean.formatTimestamp(d.createTime)}
+						</p:column>
+						
+					</p:dataTable>
+				</div>
+
+			</div>
+
+		</h:form>
+
+<p:dialog header="DOSJE E RE" height="300px" width="650px" id="createDlgId" widgetVar="createDlg" responsive="true" modal="true" closable="true" closeOnEscape="true">
+<div class="ui-g ui-fluid">
+	<div class="ui-g-12">
+	<h:form id="create_form">
+		<p:panelGrid layout="grid" columns="2" columnClasses="bold,empty">
+			
+			<p:outputLabel value="Nr Dosje" style="font-weight: bold"/> 
+			<p:inputText value="#{dossierListBean.dossier.dossierNo}" placeholder="Nr Dosje"/>
+			<p:outputLabel value="Struktura" style="font-weight: bold"/> 
+			<p:selectOneMenu value="#{dossierListBean.dossier.structure}" converter="structureConverter">
+				<f:selectItem itemValue="#{null}" itemLabel="-Struktura-"/>
+				<f:selectItems value="#{dossierListBean.structures}" var="cs" itemLabel="#{cs.name}" itemValue="#{cs}" />
+			</p:selectOneMenu>
+			<p:outputLabel value="Niveli Riskut" style="font-weight: bold"/> 
+			<p:selectOneMenu value="#{dossierListBean.dossier.riskLevel}" converter="riskLevelConverter">
+				<f:selectItem itemValue="#{null}" itemLabel="-Niveli Riskut-"/>
+				<f:selectItems value="#{dossierListBean.riskLevels}" var="crl" itemLabel="#{crl.tag}" itemValue="#{crl}" />
+			</p:selectOneMenu>
+			<p:outputLabel value="Statusi" style="font-weight: bold"/> 
+			<p:selectOneMenu value="#{dossierListBean.dossier.auditingStatus}" converter="auditStatusConverter">
+				<f:selectItem itemValue="#{null}" itemLabel="-Statusi auditimit-"/>
+				<f:selectItems value="#{dossierListBean.auditStatuses}" var="cas" itemLabel="#{cas.tag}" itemValue="#{cas}" />
+			</p:selectOneMenu>
+			<p:outputLabel value="Përshkrimi" style="font-weight: bold"/> 
+			<p:inputTextarea rows="4" value="#{dossierListBean.dossier.description}"/>
+		
+			<p:commandButton value="Regjistro" action="#{dossierListBean.register()}" update="@form :list_form" oncomplete="PF('createDlg').hide();" icon="fa fa-save" styleClass="blue=btn">
+			   <p:confirm header="Regjistro Dosje" message="Jeni të sigurt?" icon="ui-icon-alert" />
+			</p:commandButton>
+			<p:commandButton value="Pastro" action="#{dossierListBean.clear()}" update="@form :list_form" oncomplete="PF('createDlg').hide();" icon="fa fa-trash" styleClass="green-btn"/> 
+		
+		</p:panelGrid>
+	</h:form>
+	</div>
+</div>
+</p:dialog>
+		
+
+	</ui:define>
+</ui:composition>

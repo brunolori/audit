@@ -1,0 +1,38 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form>
+		<div class="ui-g">
+			
+			<div class="ui-g-12 ui-md-8">
+				<p:panelGrid layout="grid" columns="2" columnClasses="ui-grid-col-3, ui-grid-col-3" styleClass="ui-panelgrid-blank ">
+
+					<p:outputLabel value="Fillimi Auditit" styleClass="bold"/>
+					<p:calendar navigator="true" pattern="dd.MM.yyyy" value="#{dossierBean.ans.auditStartTime}" />
+					
+					<p:outputLabel value="" />
+					<p:outputLabel value="Periudha e Auditimit" style="font-weight: bold; color: red"/>					
+									
+					<p:outputLabel value="Nga Data" style="font-weight: bold"/>
+					<p:calendar navigator="true" pattern="dd.MM.yyyy" value="#{dossierBean.ans.auditPeriodStart}" />
+					<p:outputLabel value="Në Datën" style="font-weight: bold"/>
+					<p:calendar navigator="true" pattern="dd.MM.yyyy" value="#{dossierBean.ans.auditPeriodEnd}" />
+
+				</p:panelGrid>
+			</div>
+
+			<div class="ui-g-12 ui-md-6">
+				<p:panelGrid layout="grid" columns="4" styleClass="ui-panelgrid-blank">
+					<p:commandButton value="Ruaj ndryshimet" action="#{dossierBean.modifyAuditNotifStart()}" update="@form" styleClass="green-btn" icon="fa fa-save">
+					     <p:confirm header="Ruaj ndryshimet" message="Jeni të sigurt?" icon="ui-icon-alert" />
+					</p:commandButton>
+				</p:panelGrid>
+			</div>
+
+		</div>
+
+	</h:form>
+</ui:composition>

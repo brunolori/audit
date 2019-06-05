@@ -1,0 +1,49 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:panel header="MENAXHIMI PËRDORUESVE">
+	<div class="ui-g ui-fluid">
+     
+
+		<div class="ui-g-12">
+			<p:messages showDetail="true" closable="true">
+				<p:autoUpdate />
+			</p:messages>
+		</div>
+		<div class="ui-g-12 ui-md-10 ui-lg-8">
+			<p:panelGrid layout="grid" columns="4"
+				styleClass="ui-panelgrid-blank">
+				<p:commandButton value="Përdorues i ri"
+					action="#{userManagerBean.goToUserCreate()}" styleClass="orange-btn"
+					update="@form" icon="fa fa-user-plus" />
+			</p:panelGrid>
+		</div>
+		<div class="ui-g-12">
+
+			<p:dataTable value="#{userManagerBean.users}" var="u" rowIndexVar="r" reflow="true"
+				selection="#{userManagerBean.selectedUser}" selectionMode="single"
+				rowKey="#{u.id}" emptyMessage="Asnjë përdorues i listuar">
+				<f:facet name="header">Lista e përdoruesve</f:facet>
+				<p:ajax event="rowSelect"
+					listener="#{userManagerBean.onUserSelect()}" update="@form" />
+				<p:column headerText="#">#{r+1}</p:column>
+				<p:column headerText="Username">#{u.username}</p:column>
+				<p:column headerText="Emri">#{u.officer.name}</p:column>
+				<p:column headerText="Mbiemri">#{u.officer.surname}</p:column>
+				<p:column headerText="Grada">#{u.officer.grade}</p:column>
+				<p:column headerText="Funksioni">#{u.officer.function}</p:column>
+				<p:column headerText="Pozicioni">#{u.officer.position}</p:column>
+				<p:column headerText="Struktura">#{u.officer.structure.name}</p:column>
+				<p:column headerText="Roli">#{u.roleCode}</p:column>
+
+			</p:dataTable>
+
+		</div>
+		
+	</div>
+</p:panel>
+
+</ui:composition>

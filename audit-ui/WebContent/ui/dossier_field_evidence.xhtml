@@ -1,0 +1,51 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="fe_form" >
+		<div id="fe-card" class="ui-g ui-fluid">
+
+			<div class="ui-g-12 ui-md-8">
+			<h3 style="color: #3984b8;">Regjistro Evidenca në Terren</h3>
+				<p:panelGrid layout="grid" columns="1" styleClass="ui-panelgrid-blank form-group form-elements">
+					<p:inputTextarea rows="8" placeholder="Shënime..." value="#{dossierBean.fieldEvidence.notes}"  />
+				</p:panelGrid>
+			</div>
+
+			<div class="ui-g-12 ui-md-6">
+				<p:panelGrid layout="grid" columns="4" styleClass="ui-panelgrid-blank">
+					<p:commandButton value="Ruaj ndryshimet" action="#{dossierBean.registerFieldEvidence()}" update="@form" styleClass="green-btn" icon="fa fa-save" >
+					    <p:confirm header="Ruaj ndryshimet" message="Jeni të sigurt?" icon="ui-icon-alert" />
+					</p:commandButton>
+				</p:panelGrid>
+			</div>
+			<div class="ui-g-12 ui-md-8 no-highlight">
+			
+			<p:dataTable id="fe_tbl" var="fe" value="#{dossierBean.fieldEvidences}" styleClass="no-border no-highlight"
+			 editable="true" style="margin-bottom:20px" emptyMessage=" " reflow="true">
+			
+			  <p:ajax event="rowEdit" listener="#{dossierBean.modifyFieldEvidence}" update="dossier_tab_view:fe_form:fe_tbl" />
+              
+				<p:column width="35%">
+					<p:outputLabel value="#{fe.createUser.fullName()} - #{formatBean.formatTimestamp(fe.createTime)}" style="color: #3984b8; font-weight: bold;"/>
+				</p:column>
+				<p:column>
+				  <p:cellEditor>
+		               <f:facet name="output"><h:outputText value="#{fe.notes}" escape="false"/></f:facet>
+		               <f:facet name="input"><p:inputTextarea  value="#{fe.notes}" /></f:facet>
+		           </p:cellEditor>		
+				</p:column>
+				
+				<p:column style="width:32px">
+          				 <p:rowEditor />
+      		    </p:column>
+			
+			</p:dataTable>
+			</div>
+			
+		</div>
+
+	</h:form>
+</ui:composition>

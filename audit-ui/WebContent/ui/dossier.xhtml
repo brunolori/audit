@@ -1,0 +1,72 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="../WEB-INF/template.xhtml">
+
+	<ui:define name="title">Detajet e dosjes</ui:define>
+
+	<ui:define name="content">
+
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-1">
+							<h:form>
+								<p:commandButton icon="fa fa-arrow-left" styleClass="orange-btn" action="dossier_list.xhtml" ajax="false"/>
+							</h:form>
+						</div>
+						<div class="ui-g-12 ui-md-11">
+							<h1 style="color: #3984b8;">Detajet e dosjes [#{dossierBean.dossier.dossierNo}] - [#{dossierBean.dossier.structure.name}]</h1>
+						</div>
+					</div>
+					</div>
+				</div>				
+				<div class="ui-g-12">
+					<p:messages showDetail="true" closable="true">
+						<p:autoUpdate />
+					</p:messages>
+				</div>
+				<div class="ui-g-12 ui-fluid">
+
+					<p:tabView id="dossier_tab_view" >
+						<p:tab title="DETAJET">
+							<ui:include src="dossier_details.xhtml"/>
+						</p:tab>
+						
+						<p:tab title="AUTORIZIMI">
+							<ui:include src="dossier_authorization.xhtml"/>							
+						</p:tab>
+						
+						<p:tab title="NJOFTIM FILLIMIT AUDITIT">
+							<ui:include src="dossier_notification_start.xhtml"/>
+						</p:tab>
+						
+						<p:tab title="EVIDENCA NË TERREN">
+							<ui:include src="dossier_field_evidence.xhtml"/>
+						</p:tab>
+						
+						<p:tab title="OBSERVACIONET">
+							<ui:include src="dossier_observation.xhtml"/>
+						</p:tab>
+						
+						<p:tab title="REKOMANDIMET">
+							<ui:include src="dossier_recommandation.xhtml"/>
+						</p:tab>
+						
+						<p:tab title="MASAT E PROPOZUARA">
+							<ui:include src="dossier_restriction_proposal.xhtml"/>
+						</p:tab>
+						
+						<p:tab title="DOKUMENTET">
+							<ui:include src="dossier_document.xhtml"/>
+						</p:tab>
+					</p:tabView>
+
+				</div>
+
+			</div>
+
+	</ui:define>
+</ui:composition>

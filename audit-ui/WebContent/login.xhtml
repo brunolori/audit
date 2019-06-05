@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<f:facet name="first">
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<h:outputStylesheet name="style_login.css" library="css" />
+	</f:facet>
+	
+	
+	
+	<title>AUDITI</title>
+</h:head>
+
+<h:body>
+
+<p:messages showDetail="true" closable="true">
+	<p:autoUpdate/>
+</p:messages>
+
+	<div class="box">
+		<h2>Login</h2>
+		<h:form>
+
+			<div class="inputBox">
+				<input type="text" name="uname" id="uname" required="required" autocomplete="false" />
+				<label>Username</label>
+			</div>
+
+			<div class="inputBox">
+				<input type="password" name="secret" id="secret" required="required" autocomplete="false" />
+				<label>Password</label>
+			</div>
+			
+			<h:commandButton type="submit" actionListener="#{loginBean.login()}" value="Submit"/>
+
+		</h:form>
+	</div>
+
+</h:body>
+
+</html>

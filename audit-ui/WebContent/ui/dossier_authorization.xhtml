@@ -1,0 +1,83 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form>
+		<div class="ui-g">
+
+			<div class="ui-g-12 ui-md-8">
+				<p:panelGrid layout="grid" columns="2" columnClasses="bold,empty" styleClass="ui-panelgrid-blank ">
+
+					<p:outputLabel value="Nr Dosjes" />
+					<p:inputText value="#{dossierBean.dossier.dossierNo}" disabled="true" />
+					<p:outputLabel value="Struktura" />					
+					<p:inputText value="#{dossierBean.dossier.structure.name}" disabled="true"/>
+					<p:outputLabel value="Nr Autorizimi" />
+					<p:inputText value="#{dossierBean.auth.authorizationNo}"/>
+					<p:outputLabel value="Datë Autorizimi" />					
+					<p:calendar navigator="true" pattern="dd.MM.yyyy" value="#{dossierBean.auth.createTime}" />
+				</p:panelGrid>
+			</div>
+
+			<div class="ui-g-12 ui-md-8">
+			<p:panel header="Periudha e Auditimit" styleClass="blue-pnl">
+				<p:panelGrid layout="grid" columns="4" columnClasses="ui-grid-col-1,ui-grid-col-5,ui-grid-col-1,ui-grid-col-5" styleClass="ui-panelgrid-blank">
+					<p:outputLabel value="Nga data" styleClass="bold"/>
+					<p:calendar navigator="true" pattern="dd.MM.yyyy" value="#{dossierBean.auth.auditingPeriodStart}" />
+					<p:outputLabel value="Në datën" styleClass="bold"/>
+					<p:calendar navigator="true" pattern="dd.MM.yyyy" value="#{dossierBean.auth.auditingPeriodEnd}" />
+
+				</p:panelGrid>
+			</p:panel>
+			</div>
+			<div class="ui-g-12 ui-md-8">
+			<p:panel header="Kryerja e Auditit" styleClass="blue-pnl">
+				<p:panelGrid layout="grid" columns="4" styleClass="ui-panelgrid-blank ">
+					<p:outputLabel value="Koha e kryerjes së Auditimit" styleClass="bold"/>
+					<p:calendar navigator="true" pattern="dd.MM.yyyy" value="#{dossierBean.auth.auditingExecutionDate}" />
+					<p:outputLabel value="Data e përfundimit të projektit" styleClass="bold"/>
+					<p:calendar navigator="true" pattern="dd.MM.yyyy" value="#{dossierBean.auth.projectEndDate}" />
+				</p:panelGrid>
+		    </p:panel>
+			</div>
+			<div class="ui-g-12 ui-md-8">
+			<p:panel header="Audituesit" styleClass="blue-pnl">
+
+   			<h:panelGrid width="100%">
+					<p:autoComplete id="ac_sx_off" value="#{dossierBean.selectedAuditor}" placeholder="Kërko audituesin..."
+								completeMethod="#{dossierBean.searchOfficer}" var="o" itemLabel="#{o.fullName()}" itemValue="#{o}" converter="officerConverter">
+								
+						<p:ajax event="itemSelect" listener="#{dossierBean.onOfficerSelect}" update="ac_sx_off aud_tbl" />
+						
+					</p:autoComplete>
+			
+					<p:dataTable id="aud_tbl" value="#{dossierBean.auditors}" var="a" styleClass="no-border"
+					 reflow="true" emptyMessage="Nuk keni zgjedhur asnjë auditor" rowIndexVar="r">
+						 <p:column headerText="#" style="text-align: left">
+						    #{r+1}
+						 </p:column>
+						<p:column headerText="Audituesi" style="text-align: left">
+							#{a.name} #{a.surname}
+						</p:column>
+						<p:column headerText="">
+							<p:commandLink value="Hiq" action="#{dossierBean.removeAuditor(a)}" update="@form" style="color: red; font-weight: bold;"/>
+						</p:column>
+					</p:dataTable>
+			</h:panelGrid>
+			</p:panel>
+			</div>
+			
+			<div class="ui-g-12 ui-md-6">
+				<p:panelGrid layout="grid" columns="4" styleClass="ui-panelgrid-blank">
+					<p:commandButton value="Ruaj ndryshimet" action="#{dossierBean.modifyAuthorization()}" styleClass="green-btn" icon="fa fa-save">
+					<p:confirm header="Ruaj ndryshimet" message="Jeni të sigurt?" icon="ui-icon-alert" /></p:commandButton>
+				</p:panelGrid>
+			</div>
+
+		</div>
+
+	</h:form>
+
+</ui:composition>
